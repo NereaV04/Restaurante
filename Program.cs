@@ -71,6 +71,7 @@ int contEntran = 0;
 int contPlatoPrin = 0;
 int contBeb = 0;
 int contPostr = 0;
+int cont = 1;
 
 foreach (Producto producto in carta)
 {
@@ -81,7 +82,7 @@ foreach (Producto producto in carta)
             Console.WriteLine("** Entrantes **");
             contEntran++;
         }
-        Console.WriteLine(producto.GetDescription());        
+        Console.WriteLine(cont + ". " + producto.GetDescription());        
     } else if (producto is PlatoPrincipal)
     {
         if (contPlatoPrin == 0)
@@ -89,7 +90,7 @@ foreach (Producto producto in carta)
             Console.WriteLine("\n** Platos Principales **");
             contPlatoPrin++;
         }
-        Console.WriteLine(producto.GetDescription());
+        Console.WriteLine(cont + ". " + producto.GetDescription());
     } else if (producto is Bebida)
     {
         if (contBeb == 0)
@@ -97,7 +98,7 @@ foreach (Producto producto in carta)
             Console.WriteLine("\n** Bebidas **");
             contBeb++;
         }
-        Console.WriteLine(producto.GetDescription());
+        Console.WriteLine(cont + ". " + producto.GetDescription());
     } else if (producto is Postre)
     {
         if (contPostr == 0)
@@ -105,9 +106,9 @@ foreach (Producto producto in carta)
             Console.WriteLine("\n** Postres **");
             contPostr++;
         }
-        Console.WriteLine(producto.GetDescription());
+        Console.WriteLine(cont + ". " + producto.GetDescription());
     }
-    
+    cont++;
 }
 
 /*¿Por qué una List<Producto> puede contener objetos de tipo Bebida, Postre, PlatoPrincipal o Entrante?
