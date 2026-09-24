@@ -1,16 +1,14 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Models;
 
-Console.WriteLine("Hello, World!");
-
 Producto platoPrincipal1 = new PlatoPrincipal("Pizza", 12, ["Tomate", "Queso"]);
-platoPrincipal1.ShowDescription();
+Console.WriteLine(platoPrincipal1.GetDescription());
 
 Producto bebida1 = new Bebida("CocaCola", 8.5m, ["Cafeina", "Limón"], false);
-bebida1.ShowDescription();
+Console.WriteLine(bebida1.GetDescription());
 
 Postre postre1 = new Postre("Tarta de queso", 12.45m, ["Leche", "Queso", "Huevos"], 300m, false);
-postre1.ShowDescription();
+Console.WriteLine(postre1.GetDescription());
 
 // Producto producto1 = new Producto("Producto", 15m, ["Lechuga", "Carne"]);
 
@@ -22,8 +20,8 @@ combo.Add(postre1);
 foreach (var producto in combo)
 {
     Console.WriteLine(producto);
-    Console.WriteLine(producto.Name + " - " + producto.Price);
-    producto.ShowDescription();
+    Console.WriteLine(producto.Nombre + " - " + producto.Precio);
+    Console.WriteLine(producto.GetDescription());
 }
 
 
@@ -36,3 +34,12 @@ if (combo1.PlatoPrincipal is PlatoPrincipal)
 {
     Console.WriteLine("Esto es un Plato Principal dentro de un combo.");
 }
+
+
+Console.WriteLine("\n\n**** COMIENZO DE LOS EJERCICIOS ****");
+Entrante entrante1 = new Entrante("Patatas bravas", 10.25m, 4, false);
+entrante1.ObtenerDescripcion();
+Entrante entrante2 = new Entrante("Nachos", 6.50m, 1, true);
+entrante2.ObtenerDescripcion();
+Entrante entrante3 = new Entrante("Ensaladilla rusa", 16.00m, 2, true);
+entrante3.ObtenerDescripcion();
