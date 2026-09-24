@@ -9,6 +9,11 @@ public class Bebida : Producto
         IsAlcoholica = _isAlcoholica;
     }
 
+    public void ShowDescription()
+    {
+        Console.WriteLine(GetDescription() + (IsAlcoholica ? " - Es alcohólica." : " - No es alcohólica."));
+    }
+
     public override decimal CalcularPrecio()
     {
         throw new NotImplementedException();

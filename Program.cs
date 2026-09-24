@@ -116,6 +116,14 @@ foreach (Producto producto in carta)
 {
     if (producto is Bebida)
     {
-        Console.WriteLine(producto.GetDescription());
+        Bebida bebida = (Bebida) producto;
+        bebida.ShowDescription();
     }
 }
+
+/*¿Qué tipo tiene la variable utilizada para recorrer la List<Producto>?
+
+¿Puede esa variable contener un objeto cuyo tipo real sea Bebida?
+
+¿Qué permite comprobar el operador is?
+*/
