@@ -17,9 +17,9 @@ public abstract class Producto
         this.Ingredientes = _ingredientes;
     }
 
-    public void ShowDescription()
+    public string GetDescription()
     {
-        Console.WriteLine($"Name: {this.Nombre} - Price: {this.Precio:F2}");
+        return $"Nombre: {this.Nombre} - Precio: {(Precio <= 0 ? 0 : Precio):F2}";
     }
 
     public abstract decimal CalcularPrecio();
