@@ -37,7 +37,7 @@ if (combo1.PlatoPrincipal is PlatoPrincipal)
 }
 */
 
-Console.WriteLine("\n\n**** COMIENZO DE LOS EJERCICIOS **** \n");
+Console.WriteLine("\n\n**** COMIENZO DE LOS EJERCICIOS ****");
 // Almacenar los productos en una colección.
 List<Producto> carta = new List<Producto>();
 
@@ -111,8 +111,11 @@ foreach (Producto producto in carta)
     cont++;
 }
 
-/*¿Por qué una List<Producto> puede contener objetos de tipo Bebida, Postre, PlatoPrincipal o Entrante?
-Porque todas esas clases heredan de Producto, por lo que son también objetos de tipo "Producto".
-¿Qué relación existe entre estas clases y Producto?
-Existe una relación de herencia en la que Producto es la clase padre (base) y todas las demás son sus hijos, por lo que tienen los atributos del padre junto algunos propios.
-*/
+Console.WriteLine("\n\t=== CARTA FILTRADA POR BEBIDAS ===");
+foreach (Producto producto in carta)
+{
+    if (producto is Bebida)
+    {
+        Console.WriteLine(producto.GetDescription());
+    }
+}
