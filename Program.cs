@@ -122,8 +122,9 @@ foreach (Producto producto in carta)
 }
 
 /*¿Qué tipo tiene la variable utilizada para recorrer la List<Producto>?
-
+Es de tipo Producto, ya que es el tipo de la colección.
 ¿Puede esa variable contener un objeto cuyo tipo real sea Bebida?
-
+Sí, ya que Bebida hereda de Producto.
 ¿Qué permite comprobar el operador is?
+Permite comprobar si un objeto es de un tipo específico o si es de una clase que hereda de la clase padre.
 */
