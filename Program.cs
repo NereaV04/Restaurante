@@ -65,8 +65,28 @@ carta.Add(postre1);
 Postre postre2 = new Postre("Tiramisu", 7m, ["Mascarpone", "Huevos"], 250m, false);
 carta.Add(postre2);
 
+// CArta filtrada por bebidas.
+Console.WriteLine("\t=== CARTA FILTRADA POR BEBIDAS ===");
+foreach (Producto producto in carta)
+{
+    if (producto is Bebida)
+    {
+        Bebida bebida = (Bebida) producto;
+        bebida.ShowDescription();
+    }
+}
+
+/*¿Qué tipo tiene la variable utilizada para recorrer la List<Producto>?
+Es de tipo Producto, ya que es el tipo de la colección.
+¿Puede esa variable contener un objeto cuyo tipo real sea Bebida?
+Sí, ya que Bebida hereda de Producto.
+¿Qué permite comprobar el operador is?
+Permite comprobar si un objeto es de un tipo específico o si es de una clase que hereda de la clase padre.
+*/
+
+
 // Mostrar los elementos de la carta usando un foreach
-Console.WriteLine("\t=== CARTA ===");
+Console.WriteLine("\n\t=== CARTA ===");
 int contEntran = 0;
 int contPlatoPrin = 0;
 int contBeb = 0;
@@ -111,20 +131,11 @@ foreach (Producto producto in carta)
     cont++;
 }
 
-Console.WriteLine("\n\t=== CARTA FILTRADA POR BEBIDAS ===");
-foreach (Producto producto in carta)
-{
-    if (producto is Bebida)
-    {
-        Bebida bebida = (Bebida) producto;
-        bebida.ShowDescription();
-    }
-}
-
-/*¿Qué tipo tiene la variable utilizada para recorrer la List<Producto>?
-Es de tipo Producto, ya que es el tipo de la colección.
-¿Puede esa variable contener un objeto cuyo tipo real sea Bebida?
-Sí, ya que Bebida hereda de Producto.
-¿Qué permite comprobar el operador is?
-Permite comprobar si un objeto es de un tipo específico o si es de una clase que hereda de la clase padre.
-*/
+Console.WriteLine("¿Qué producto quieres?");
+if (!int.TryParse(Console.ReadLine(), out opcion) ||
+                opcion < 1 ||
+                opcion > OpcionSalir)
+            {
+                Console.WriteLine("Error: selecciona una opción válida (1-5).");
+                continue;
+            }
