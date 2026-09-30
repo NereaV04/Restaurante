@@ -1,4 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Diagnostics;
+using System.Net;
 using System.Reflection.Metadata;
 using Models;
 
@@ -71,7 +73,7 @@ foreach (Producto producto in carta)
 {
     if (producto is Bebida)
     {
-        Bebida bebida = (Bebida) producto;
+        Bebida bebida = (Bebida)producto;
         bebida.ShowDescription();
     }
 }
@@ -102,8 +104,9 @@ foreach (Producto producto in carta)
             Console.WriteLine("** Entrantes **");
             contEntran++;
         }
-        Console.WriteLine(cont + ". " + producto.GetDescription());        
-    } else if (producto is PlatoPrincipal)
+        Console.WriteLine(cont + ". " + producto.GetDescription());
+    }
+    else if (producto is PlatoPrincipal)
     {
         if (contPlatoPrin == 0)
         {
@@ -111,7 +114,8 @@ foreach (Producto producto in carta)
             contPlatoPrin++;
         }
         Console.WriteLine(cont + ". " + producto.GetDescription());
-    } else if (producto is Bebida)
+    }
+    else if (producto is Bebida)
     {
         if (contBeb == 0)
         {
@@ -119,7 +123,8 @@ foreach (Producto producto in carta)
             contBeb++;
         }
         Console.WriteLine(cont + ". " + producto.GetDescription());
-    } else if (producto is Postre)
+    }
+    else if (producto is Postre)
     {
         if (contPostr == 0)
         {
@@ -132,10 +137,58 @@ foreach (Producto producto in carta)
 }
 
 Console.WriteLine("¿Qué producto quieres?");
-if (!int.TryParse(Console.ReadLine(), out opcion) ||
-                opcion < 1 ||
-                opcion > OpcionSalir)
-            {
-                Console.WriteLine("Error: selecciona una opción válida (1-5).");
-                continue;
-            }
+int opcion;
+bool hayError;
+
+do
+{
+    hayError = false;
+    if (!int.TryParse(Console.ReadLine(), out opcion))
+    {
+        Console.WriteLine("Debes introducir un número.");
+        hayError = true;
+    }
+    else if (opcion < 1 || opcion > carta.Count)
+    {
+        Console.WriteLine("Ese producto no existe, selecciona una opción válida (1-8).");
+        hayError = true;
+    }
+
+    switch (opcion)
+    {
+        case 1:
+            mostrarProducto(opcion - 1);
+            break;
+
+        case 2:
+            mostrarProducto(opcion - 1);
+            break;
+        case 3:
+            mostrarProducto(opcion - 1);
+            break;
+        case 4:
+            mostrarProducto(opcion - 1);
+            break;
+
+        case 5:
+            mostrarProducto(opcion - 1);
+            break;
+
+        case 6:
+            mostrarProducto(opcion - 1);
+            break;
+
+        case 7:
+            mostrarProducto(opcion - 1);
+            break;
+
+        case 8:
+            mostrarProducto(opcion - 1);
+            break;
+    }
+} while (hayError);
+
+void mostrarProducto(int producto)
+{
+    Console.WriteLine(carta[producto].GetDescription());
+}
