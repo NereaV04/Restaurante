@@ -136,25 +136,20 @@ foreach (Producto producto in carta)
     cont++;
 }
 
-Console.WriteLine("¿Qué producto quieres?");
-int opcion;
-bool hayError;
+Console.WriteLine("Producto a buscar: ");
+string productoIntroducido = Console.ReadLine();
+bool encontrado = false;
 
-do
+foreach (Producto prodBuscar in carta)
 {
-    hayError = false;
-    if (!int.TryParse(Console.ReadLine(), out opcion))
+    if (prodBuscar.Nombre.ToLower() == productoIntroducido.ToLower().Trim())
     {
-        Console.WriteLine("Debes introducir un número.");
-        hayError = true;
+        Console.WriteLine(prodBuscar.GetDescription());
+        encontrado = true;
     }
-    else if (opcion < 1 || opcion > carta.Count)
-    {
-        Console.WriteLine("Ese producto no existe, selecciona una opción válida (1-8).");
-        hayError = true;
-    } else
-    {
-        Console.WriteLine(carta[opcion -1].GetDescription());
-    }
+}
 
-} while (hayError);
+if (!encontrado)
+{
+    Console.WriteLine("No se ha encontrado el producto.");
+}
