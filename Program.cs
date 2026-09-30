@@ -152,43 +152,9 @@ do
     {
         Console.WriteLine("Ese producto no existe, selecciona una opción válida (1-8).");
         hayError = true;
-    }
-
-    switch (opcion)
+    } else
     {
-        case 1:
-            mostrarProducto(opcion - 1);
-            break;
-
-        case 2:
-            mostrarProducto(opcion - 1);
-            break;
-        case 3:
-            mostrarProducto(opcion - 1);
-            break;
-        case 4:
-            mostrarProducto(opcion - 1);
-            break;
-
-        case 5:
-            mostrarProducto(opcion - 1);
-            break;
-
-        case 6:
-            mostrarProducto(opcion - 1);
-            break;
-
-        case 7:
-            mostrarProducto(opcion - 1);
-            break;
-
-        case 8:
-            mostrarProducto(opcion - 1);
-            break;
+        Console.WriteLine(carta[opcion -1].GetDescription());
     }
-} while (hayError);
 
-void mostrarProducto(int producto)
-{
-    Console.WriteLine(carta[producto].GetDescription());
-}
+} while (hayError);
