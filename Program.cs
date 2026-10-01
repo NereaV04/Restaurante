@@ -51,7 +51,7 @@ Entrante entrante2 = new Entrante("Nachos", 8.25m, 1, true);
 carta.Add(entrante2);
 
 // Crear 2 platos principales.
-PlatoPrincipal platoPrincipal1 = new PlatoPrincipal("Hamburguesa Completa", 16m, ["Carne", "Lechuga"]);
+PlatoPrincipal platoPrincipal1 = new PlatoPrincipal("Hamburguesa", 16m, ["Carne", "Lechuga"]);
 carta.Add(platoPrincipal1);
 Producto platoPrincipal2 = new PlatoPrincipal("Pizza", 12, ["Tomate", "Queso"]);
 carta.Add(platoPrincipal2);
@@ -97,7 +97,7 @@ do
             AgregarProductoAlPedido(carta, pedido);
             break;
         case 3:
-            BuscarProducto(carta);
+            MostrarPedido(pedido);
             break;
         case 4:
             BuscarProducto(carta);
@@ -297,4 +297,28 @@ void AgregarProductoAlPedido(List<Producto> carta, List<Producto> pedido)
     Producto producto1 = ElegirProducto(carta);
     pedido.Add(producto1);
     Console.WriteLine($"{producto1.Nombre} añadido/a al pedido.");
+}
+
+void MostrarPedido(List<Producto> pedido)
+{
+    if (pedido.Count == 0)
+    {
+        Console.WriteLine("El pedido está vacío.");
+    }
+    else
+    {
+
+        Console.WriteLine("\n\t=== TU PEDIDO ===");
+        Console.WriteLine("PRODUCTO\t\tPRECIO");
+        Console.WriteLine("-----------------------------------");
+        decimal precioTotal = 0;
+        foreach (Producto producto in pedido)
+        {
+            Console.WriteLine($"{producto.Nombre}\t\t{producto.Precio:F2}€");
+            precioTotal += producto.Precio;
+        }
+        Console.WriteLine("-----------------------------------");
+        Console.WriteLine($"TOTAL:\t\t\t{precioTotal:F2}€");
+    }
+
 }
