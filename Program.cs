@@ -42,6 +42,7 @@ if (combo1.PlatoPrincipal is PlatoPrincipal)
 Console.WriteLine("\n\n**** COMIENZO DE LOS EJERCICIOS ****");
 // Almacenar los productos en una colección.
 List<Producto> carta = new List<Producto>();
+List<Producto> pedido = new List<Producto>();
 
 // Crear 2 entrantes.
 Entrante entrante1 = new Entrante("Patatas bravas", 6m, 4, false);
@@ -69,13 +70,6 @@ carta.Add(postre2);
 
 CartaFiltradaPorBebida(carta);
 
-/*¿Qué tipo tiene la variable utilizada para recorrer la List<Producto>?
-Es de tipo Producto, ya que es el tipo de la colección.
-¿Puede esa variable contener un objeto cuyo tipo real sea Bebida?
-Sí, ya que Bebida hereda de Producto.
-¿Qué permite comprobar el operador is?
-Permite comprobar si un objeto es de un tipo específico o si es de una clase que hereda de la clase padre.
-*/
 int opcion;
 const int opcionSalir = 0;
 
@@ -88,27 +82,30 @@ do
         opcion = -1; // Asignar un valor inválido para que el bucle continúe.
         continue;
     }
-    else if (opcion < opcionSalir || opcion > 5)
+    else if (opcion < opcionSalir || opcion > 6)
     {
-        Console.WriteLine("Opción no válida, selecciona una opción válida (0-5).");
+        Console.WriteLine("Opción no válida, selecciona una opción válida (0-6).");
         continue;
     }
 
-    switch(opcion)
+    switch (opcion)
     {
         case 1:
             MostrarCarta(carta);
             break;
         case 2:
-            ElegirProducto(carta);
+            AgregarProductoAlPedido(carta, pedido);
             break;
         case 3:
             BuscarProducto(carta);
             break;
         case 4:
-            MostrarProductosPorPrecio(carta);
+            BuscarProducto(carta);
             break;
         case 5:
+            MostrarProductosPorPrecio(carta);
+            break;
+        case 6:
             MostrarProductoMasCaro(carta);
             break;
         case opcionSalir:
@@ -123,10 +120,11 @@ void MostrarMenu()
     Console.WriteLine("\tRESTAURANTE");
     Console.WriteLine("========================");
     Console.WriteLine("1. Ver carta.");
-    Console.WriteLine("2. Elegir producto.");
-    Console.WriteLine("3. Buscar producto.");
-    Console.WriteLine("4. Productos por precio.");
-    Console.WriteLine("5. Producto más caro.");
+    Console.WriteLine("2. Añadir producto al pedido.");
+    Console.WriteLine("3. Ver pedido.");
+    Console.WriteLine("4. Buscar producto.");
+    Console.WriteLine("5. Productos por precio.");
+    Console.WriteLine("6. Producto más caro.");
     Console.WriteLine("0. Salir.");
     Console.WriteLine("\n Elija una opción: ");
 }
@@ -183,34 +181,29 @@ void MostrarCarta(List<Producto> carta)
     }
 }
 
-void ElegirProducto(List<Producto> carta)
+Producto ElegirProducto(List<Producto> carta)
 {
     Console.WriteLine("¿Qué producto quieres? (numero del plato)");
     int opcion;
-    bool hayError;
 
     do
     {
-        hayError = false;
         if (!int.TryParse(Console.ReadLine(), out opcion))
         {
             Console.WriteLine("Debes introducir un número.");
-            hayError = true;
+            continue;
         }
         else if (opcion < 1 || opcion > carta.Count)
         {
             Console.WriteLine("Ese producto no existe, selecciona una opción válida (1-8).");
-            hayError = true;
+            continue;
         }
 
-        foreach (Producto producto in carta)
-        {
-            if (carta.IndexOf(producto) == opcion - 1)
-            {
-                Console.WriteLine($"Has elegido: {producto.GetDescription()}");
-            }
-        }
-    } while (hayError);
+        Producto producto1 = carta[opcion - 1]; // Obtener el producto seleccionado por el usuario.
+        Console.WriteLine($"Has elegido: {producto1.GetDescription()}");
+
+        return producto1; // Devolver el producto seleccionado.
+    } while (true);
 }
 
 void CartaFiltradaPorBebida(List<Producto> carta)
@@ -295,4 +288,13 @@ void MostrarProductoMasCaro(List<Producto> carta)
             Console.WriteLine($"El producto más caro es: {producto.GetDescription()}");
         }
     }
+}
+
+void AgregarProductoAlPedido(List<Producto> carta, List<Producto> pedido)
+{
+    MostrarCarta(carta);
+
+    Producto producto1 = ElegirProducto(carta);
+    pedido.Add(producto1);
+    Console.WriteLine($"{producto1.Nombre} añadido/a al pedido.");
 }
