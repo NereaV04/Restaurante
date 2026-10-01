@@ -1,7 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Diagnostics;
+using System.Net;
+using System.Reflection.Metadata;
 using Models;
 
-Producto platoPrincipal1 = new PlatoPrincipal("Pizza", 12, ["Tomate", "Queso"]);
+/* Producto platoPrincipal1 = new PlatoPrincipal("Pizza", 12, ["Tomate", "Queso"]);
 Console.WriteLine(platoPrincipal1.GetDescription());
 
 Producto bebida1 = new Bebida("CocaCola", 8.5m, ["Cafeina", "Limón"], false);
@@ -34,12 +37,218 @@ if (combo1.PlatoPrincipal is PlatoPrincipal)
 {
     Console.WriteLine("Esto es un Plato Principal dentro de un combo.");
 }
-
+*/
 
 Console.WriteLine("\n\n**** COMIENZO DE LOS EJERCICIOS ****");
-Entrante entrante1 = new Entrante("Patatas bravas", 10.25m, 4, false);
-entrante1.ObtenerDescripcion();
-Entrante entrante2 = new Entrante("Nachos", 6.50m, 1, true);
-entrante2.ObtenerDescripcion();
-Entrante entrante3 = new Entrante("Ensaladilla rusa", 16.00m, 2, true);
-entrante3.ObtenerDescripcion();
+// Almacenar los productos en una colección.
+List<Producto> carta = new List<Producto>();
+
+// Crear 2 entrantes.
+Entrante entrante1 = new Entrante("Patatas bravas", 6m, 4, false);
+carta.Add(entrante1);
+Entrante entrante2 = new Entrante("Nachos", 8.25m, 1, true);
+carta.Add(entrante2);
+
+// Crear 2 platos principales.
+PlatoPrincipal platoPrincipal1 = new PlatoPrincipal("Hamburguesa Completa", 16m, ["Carne", "Lechuga"]);
+carta.Add(platoPrincipal1);
+Producto platoPrincipal2 = new PlatoPrincipal("Pizza", 12, ["Tomate", "Queso"]);
+carta.Add(platoPrincipal2);
+
+// Crear 2 bebidas.
+Bebida bebida1 = new Bebida("Coca-Cola", 3m, ["Cafeina", "Limón"], false);
+carta.Add(bebida1);
+Bebida bebida2 = new Bebida("Cerveza", 1.50m, ["Cevada", "Trazas de levadura"], true);
+carta.Add(bebida2);
+
+// Crear 2 postres.
+Postre postre1 = new Postre("Tarta de queso", 5m, ["Queso", "Huevos"], 321m, false);
+carta.Add(postre1);
+Postre postre2 = new Postre("Tiramisu", 7m, ["Mascarpone", "Huevos"], 250m, false);
+carta.Add(postre2);
+
+CartaFiltradaPorBebida(carta);
+
+/*¿Qué tipo tiene la variable utilizada para recorrer la List<Producto>?
+Es de tipo Producto, ya que es el tipo de la colección.
+¿Puede esa variable contener un objeto cuyo tipo real sea Bebida?
+Sí, ya que Bebida hereda de Producto.
+¿Qué permite comprobar el operador is?
+Permite comprobar si un objeto es de un tipo específico o si es de una clase que hereda de la clase padre.
+*/
+
+MostrarCarta(carta);
+
+ElegirProducto(carta);
+
+BuscarProducto(carta);
+
+MostrarProductosPorPrecio(carta);
+
+MostrarProductoMasCaro(carta);
+
+void MostrarCarta(List<Producto> carta)
+{
+    // Mostrar los elementos de la carta usando un foreach
+    Console.WriteLine("\n\t=== CARTA ===");
+    int contEntran = 0;
+    int contPlatoPrin = 0;
+    int contBeb = 0;
+    int contPostr = 0;
+    int cont = 1;
+
+    foreach (Producto producto in carta)
+    {
+        if (producto is Entrante)
+        {
+            if (contEntran == 0)
+            {
+                Console.WriteLine("  ** Entrantes **");
+                contEntran++;
+            }
+            Console.WriteLine(cont + ". " + producto.GetDescription());
+        }
+        else if (producto is PlatoPrincipal)
+        {
+            if (contPlatoPrin == 0)
+            {
+                Console.WriteLine("\n  ** Platos Principales **");
+                contPlatoPrin++;
+            }
+            Console.WriteLine(cont + ". " + producto.GetDescription());
+        }
+        else if (producto is Bebida)
+        {
+            if (contBeb == 0)
+            {
+                Console.WriteLine("\n  ** Bebidas **");
+                contBeb++;
+            }
+            Console.WriteLine(cont + ". " + producto.GetDescription());
+        }
+        else if (producto is Postre)
+        {
+            if (contPostr == 0)
+            {
+                Console.WriteLine("\n  ** Postres **");
+                contPostr++;
+            }
+            Console.WriteLine(cont + ". " + producto.GetDescription());
+        }
+        cont++;
+    }
+}
+
+void ElegirProducto(List<Producto> carta)
+{
+    Console.WriteLine("¿Qué producto quieres?");
+    int opcion;
+    bool hayError;
+
+    do
+    {
+        hayError = false;
+        if (!int.TryParse(Console.ReadLine(), out opcion))
+        {
+            Console.WriteLine("Debes introducir un número.");
+            hayError = true;
+        }
+        else if (opcion < 1 || opcion > carta.Count)
+        {
+            Console.WriteLine("Ese producto no existe, selecciona una opción válida (1-8).");
+            hayError = true;
+        }
+
+        foreach (Producto producto in carta)
+        {
+            if (carta.IndexOf(producto) == opcion - 1)
+            {
+                Console.WriteLine($"Has elegido: {producto.GetDescription()}");
+            }
+        }
+    } while (hayError);
+}
+
+void CartaFiltradaPorBebida(List<Producto> carta)
+{
+    // Carta filtrada por bebidas.
+    Console.WriteLine("\t=== CARTA FILTRADA POR BEBIDAS ===");
+    foreach (Producto producto in carta)
+    {
+        if (producto is Bebida)
+        {
+            Bebida bebida = (Bebida)producto;
+            bebida.ShowDescription();
+        }
+    }
+}
+
+void BuscarProducto(List<Producto> carta)
+{
+    Console.WriteLine("Producto a buscar: ");
+    string productoIntroducido = Console.ReadLine();
+    bool encontrado = false;
+
+    foreach (Producto prodBuscar in carta)
+    {
+        if (prodBuscar.Nombre.ToLower() == productoIntroducido.ToLower().Trim())
+        {
+            Console.WriteLine(prodBuscar.GetDescription());
+            encontrado = true;
+        }
+    }
+
+    if (!encontrado)
+    {
+        Console.WriteLine("No se ha encontrado el producto.");
+    }
+}
+
+void MostrarProductosPorPrecio(List<Producto> carta)
+{
+    Console.WriteLine("Precio máximo: ");
+    decimal precioIntroducido;
+    bool encontrado = false;
+
+    if (!decimal.TryParse(Console.ReadLine(), out precioIntroducido))
+    {
+        Console.WriteLine("Error; debe introducir un valor númerico.");
+    }
+    else
+    {
+        foreach (Producto prodBuscar in carta)
+        {
+            if (prodBuscar.Precio <= precioIntroducido)
+            {
+                Console.WriteLine(prodBuscar.GetDescription());
+                encontrado = true;
+            }
+        }
+    }
+
+
+    if (!encontrado)
+    {
+        Console.WriteLine("No se ha encontrado ningún producto que cumpla la condición de precio.");
+    }
+}
+
+void MostrarProductoMasCaro(List<Producto> carta)
+{
+    decimal precioMaximo = carta[0].Precio;
+    foreach (Producto producto in carta)
+    {
+        if (producto.Precio > precioMaximo)
+        {
+            precioMaximo = producto.Precio;
+        }
+    }
+
+    foreach (Producto producto in carta)
+    {
+        if (producto.Precio == precioMaximo)
+        {
+            Console.WriteLine($"\nEl producto más caro es: {producto.GetDescription()}");
+        }
+    }
+}

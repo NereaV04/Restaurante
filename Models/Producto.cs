@@ -19,7 +19,7 @@ public abstract class Producto
 
     public string GetDescription()
     {
-        return $"Nombre: {this.Nombre} - Precio: {(Precio <= 0 ? 0 : Precio):F2}";
+        return $"{this.Nombre} - {(Precio <= 0 ? 0 : Precio):F2} €";
     }
 
     public abstract decimal CalcularPrecio();
