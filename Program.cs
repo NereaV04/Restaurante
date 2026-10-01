@@ -76,21 +76,65 @@ Sí, ya que Bebida hereda de Producto.
 ¿Qué permite comprobar el operador is?
 Permite comprobar si un objeto es de un tipo específico o si es de una clase que hereda de la clase padre.
 */
+int opcion;
+const int opcionSalir = 0;
 
-MostrarCarta(carta);
+do
+{
+    MostrarMenu();
+    if (!int.TryParse(Console.ReadLine(), out opcion))
+    {
+        Console.WriteLine("Debes introducir un número.");
+        opcion = -1; // Asignar un valor inválido para que el bucle continúe.
+        continue;
+    }
+    else if (opcion < opcionSalir || opcion > 5)
+    {
+        Console.WriteLine("Opción no válida, selecciona una opción válida (0-5).");
+        continue;
+    }
 
-ElegirProducto(carta);
+    switch(opcion)
+    {
+        case 1:
+            MostrarCarta(carta);
+            break;
+        case 2:
+            ElegirProducto(carta);
+            break;
+        case 3:
+            BuscarProducto(carta);
+            break;
+        case 4:
+            MostrarProductosPorPrecio(carta);
+            break;
+        case 5:
+            MostrarProductoMasCaro(carta);
+            break;
+        case opcionSalir:
+            Console.WriteLine("¡Hasta la próxima!");
+            break;
+    }
+} while (opcion != opcionSalir);
 
-BuscarProducto(carta);
-
-MostrarProductosPorPrecio(carta);
-
-MostrarProductoMasCaro(carta);
+void MostrarMenu()
+{
+    Console.WriteLine("\n========================");
+    Console.WriteLine("\tRESTAURANTE");
+    Console.WriteLine("========================");
+    Console.WriteLine("1. Ver carta.");
+    Console.WriteLine("2. Elegir producto.");
+    Console.WriteLine("3. Buscar producto.");
+    Console.WriteLine("4. Productos por precio.");
+    Console.WriteLine("5. Producto más caro.");
+    Console.WriteLine("0. Salir.");
+    Console.WriteLine("\n Elija una opción: ");
+}
 
 void MostrarCarta(List<Producto> carta)
 {
     // Mostrar los elementos de la carta usando un foreach
-    Console.WriteLine("\n\t=== CARTA ===");
+    Console.WriteLine("\t=== CARTA ===");
     int contEntran = 0;
     int contPlatoPrin = 0;
     int contBeb = 0;
@@ -141,7 +185,7 @@ void MostrarCarta(List<Producto> carta)
 
 void ElegirProducto(List<Producto> carta)
 {
-    Console.WriteLine("¿Qué producto quieres?");
+    Console.WriteLine("¿Qué producto quieres? (numero del plato)");
     int opcion;
     bool hayError;
 
@@ -185,7 +229,7 @@ void CartaFiltradaPorBebida(List<Producto> carta)
 
 void BuscarProducto(List<Producto> carta)
 {
-    Console.WriteLine("Producto a buscar: ");
+    Console.WriteLine("Producto a buscar (nombre): ");
     string productoIntroducido = Console.ReadLine();
     bool encontrado = false;
 
@@ -248,7 +292,7 @@ void MostrarProductoMasCaro(List<Producto> carta)
     {
         if (producto.Precio == precioMaximo)
         {
-            Console.WriteLine($"\nEl producto más caro es: {producto.GetDescription()}");
+            Console.WriteLine($"El producto más caro es: {producto.GetDescription()}");
         }
     }
 }
