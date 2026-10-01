@@ -67,16 +67,7 @@ carta.Add(postre1);
 Postre postre2 = new Postre("Tiramisu", 7m, ["Mascarpone", "Huevos"], 250m, false);
 carta.Add(postre2);
 
-// CArta filtrada por bebidas.
-Console.WriteLine("\t=== CARTA FILTRADA POR BEBIDAS ===");
-foreach (Producto producto in carta)
-{
-    if (producto is Bebida)
-    {
-        Bebida bebida = (Bebida)producto;
-        bebida.ShowDescription();
-    }
-}
+CartaFiltradaPorBebida(carta);
 
 /*¿Qué tipo tiene la variable utilizada para recorrer la List<Producto>?
 Es de tipo Producto, ya que es el tipo de la colección.
@@ -86,55 +77,8 @@ Sí, ya que Bebida hereda de Producto.
 Permite comprobar si un objeto es de un tipo específico o si es de una clase que hereda de la clase padre.
 */
 
+MostrarCarta(carta);
 
-// Mostrar los elementos de la carta usando un foreach
-Console.WriteLine("\n\t=== CARTA ===");
-int contEntran = 0;
-int contPlatoPrin = 0;
-int contBeb = 0;
-int contPostr = 0;
-int cont = 1;
-
-foreach (Producto producto in carta)
-{
-    if (producto is Entrante)
-    {
-        if (contEntran == 0)
-        {
-            Console.WriteLine("** Entrantes **");
-            contEntran++;
-        }
-        Console.WriteLine(cont + ". " + producto.GetDescription());
-    }
-    else if (producto is PlatoPrincipal)
-    {
-        if (contPlatoPrin == 0)
-        {
-            Console.WriteLine("\n** Platos Principales **");
-            contPlatoPrin++;
-        }
-        Console.WriteLine(cont + ". " + producto.GetDescription());
-    }
-    else if (producto is Bebida)
-    {
-        if (contBeb == 0)
-        {
-            Console.WriteLine("\n** Bebidas **");
-            contBeb++;
-        }
-        Console.WriteLine(cont + ". " + producto.GetDescription());
-    }
-    else if (producto is Postre)
-    {
-        if (contPostr == 0)
-        {
-            Console.WriteLine("\n** Postres **");
-            contPostr++;
-        }
-        Console.WriteLine(cont + ". " + producto.GetDescription());
-    }
-    cont++;
-}
 
 /*Console.WriteLine("Producto a buscar: ");
 string productoIntroducido = Console.ReadLine();
@@ -194,5 +138,71 @@ foreach (Producto producto in carta)
     if (producto.Precio == precioMaximo)
     {
         Console.WriteLine($"\nEl producto más caro es: {producto.GetDescription()}");
+    }
+}
+
+void MostrarCarta(List<Producto> carta)
+{
+    // Mostrar los elementos de la carta usando un foreach
+    Console.WriteLine("\n\t=== CARTA ===");
+    int contEntran = 0;
+    int contPlatoPrin = 0;
+    int contBeb = 0;
+    int contPostr = 0;
+    int cont = 1;
+
+    foreach (Producto producto in carta)
+    {
+        if (producto is Entrante)
+        {
+            if (contEntran == 0)
+            {
+                Console.WriteLine("  ** Entrantes **");
+                contEntran++;
+            }
+            Console.WriteLine(cont + ". " + producto.GetDescription());
+        }
+        else if (producto is PlatoPrincipal)
+        {
+            if (contPlatoPrin == 0)
+            {
+                Console.WriteLine("\n  ** Platos Principales **");
+                contPlatoPrin++;
+            }
+            Console.WriteLine(cont + ". " + producto.GetDescription());
+        }
+        else if (producto is Bebida)
+        {
+            if (contBeb == 0)
+            {
+                Console.WriteLine("\n  ** Bebidas **");
+                contBeb++;
+            }
+            Console.WriteLine(cont + ". " + producto.GetDescription());
+        }
+        else if (producto is Postre)
+        {
+            if (contPostr == 0)
+            {
+                Console.WriteLine("\n  ** Postres **");
+                contPostr++;
+            }
+            Console.WriteLine(cont + ". " + producto.GetDescription());
+        }
+        cont++;
+    }
+}
+
+void CartaFiltradaPorBebida(List<Producto> carta)
+{
+    // Carta filtrada por bebidas.
+    Console.WriteLine("\t=== CARTA FILTRADA POR BEBIDAS ===");
+    foreach (Producto producto in carta)
+    {
+        if (producto is Bebida)
+        {
+            Bebida bebida = (Bebida)producto;
+            bebida.ShowDescription();
+        }
     }
 }
