@@ -79,67 +79,13 @@ Permite comprobar si un objeto es de un tipo específico o si es de una clase qu
 
 MostrarCarta(carta);
 
+ElegirProducto(carta);
 
-/*Console.WriteLine("Producto a buscar: ");
-string productoIntroducido = Console.ReadLine();
-bool encontrado = false;
+BuscarProducto(carta);
 
-foreach (Producto prodBuscar in carta)
-{
-    if (prodBuscar.Nombre.ToLower() == productoIntroducido.ToLower().Trim())
-    {
-        Console.WriteLine(prodBuscar.GetDescription());
-        encontrado = true;
-    }
-}
+MostrarProductosPorPrecio(carta);
 
-if (!encontrado)
-{
-    Console.WriteLine("No se ha encontrado el producto.");
-}*/
-
-/*Console.WriteLine("Precio máximo: ");
-decimal precioIntroducido;
-bool encontrado = false;
-
-if (!decimal.TryParse(Console.ReadLine(), out precioIntroducido))
-{
-    Console.WriteLine("Error; debe introducir un valor númerico.");
-}
-else
-{
-    foreach (Producto prodBuscar in carta)
-    {
-        if (prodBuscar.Precio <= precioIntroducido)
-        {
-            Console.WriteLine(prodBuscar.GetDescription());
-            encontrado = true;
-        }
-    }
-}
-
-
-if (!encontrado)
-{
-    Console.WriteLine("No se ha encontrado ningún producto que cumpla la condición de precio.");
-}*/
-
-decimal precioMaximo = carta[0].Precio;
-foreach (Producto producto in carta)
-{
-    if (producto.Precio > precioMaximo)
-    {
-        precioMaximo = producto.Precio;
-    }
-}
-
-foreach (Producto producto in carta)
-{
-    if (producto.Precio == precioMaximo)
-    {
-        Console.WriteLine($"\nEl producto más caro es: {producto.GetDescription()}");
-    }
-}
+MostrarProductoMasCaro(carta);
 
 void MostrarCarta(List<Producto> carta)
 {
@@ -193,6 +139,36 @@ void MostrarCarta(List<Producto> carta)
     }
 }
 
+void ElegirProducto(List<Producto> carta)
+{
+    Console.WriteLine("¿Qué producto quieres?");
+    int opcion;
+    bool hayError;
+
+    do
+    {
+        hayError = false;
+        if (!int.TryParse(Console.ReadLine(), out opcion))
+        {
+            Console.WriteLine("Debes introducir un número.");
+            hayError = true;
+        }
+        else if (opcion < 1 || opcion > carta.Count)
+        {
+            Console.WriteLine("Ese producto no existe, selecciona una opción válida (1-8).");
+            hayError = true;
+        }
+
+        foreach (Producto producto in carta)
+        {
+            if (carta.IndexOf(producto) == opcion - 1)
+            {
+                Console.WriteLine($"Has elegido: {producto.GetDescription()}");
+            }
+        }
+    } while (hayError);
+}
+
 void CartaFiltradaPorBebida(List<Producto> carta)
 {
     // Carta filtrada por bebidas.
@@ -203,6 +179,76 @@ void CartaFiltradaPorBebida(List<Producto> carta)
         {
             Bebida bebida = (Bebida)producto;
             bebida.ShowDescription();
+        }
+    }
+}
+
+void BuscarProducto(List<Producto> carta)
+{
+    Console.WriteLine("Producto a buscar: ");
+    string productoIntroducido = Console.ReadLine();
+    bool encontrado = false;
+
+    foreach (Producto prodBuscar in carta)
+    {
+        if (prodBuscar.Nombre.ToLower() == productoIntroducido.ToLower().Trim())
+        {
+            Console.WriteLine(prodBuscar.GetDescription());
+            encontrado = true;
+        }
+    }
+
+    if (!encontrado)
+    {
+        Console.WriteLine("No se ha encontrado el producto.");
+    }
+}
+
+void MostrarProductosPorPrecio(List<Producto> carta)
+{
+    Console.WriteLine("Precio máximo: ");
+    decimal precioIntroducido;
+    bool encontrado = false;
+
+    if (!decimal.TryParse(Console.ReadLine(), out precioIntroducido))
+    {
+        Console.WriteLine("Error; debe introducir un valor númerico.");
+    }
+    else
+    {
+        foreach (Producto prodBuscar in carta)
+        {
+            if (prodBuscar.Precio <= precioIntroducido)
+            {
+                Console.WriteLine(prodBuscar.GetDescription());
+                encontrado = true;
+            }
+        }
+    }
+
+
+    if (!encontrado)
+    {
+        Console.WriteLine("No se ha encontrado ningún producto que cumpla la condición de precio.");
+    }
+}
+
+void MostrarProductoMasCaro(List<Producto> carta)
+{
+    decimal precioMaximo = carta[0].Precio;
+    foreach (Producto producto in carta)
+    {
+        if (producto.Precio > precioMaximo)
+        {
+            precioMaximo = producto.Precio;
+        }
+    }
+
+    foreach (Producto producto in carta)
+    {
+        if (producto.Precio == precioMaximo)
+        {
+            Console.WriteLine($"\nEl producto más caro es: {producto.GetDescription()}");
         }
     }
 }
