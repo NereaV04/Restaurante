@@ -50,7 +50,7 @@ Entrante entrante2 = new Entrante("Nachos", 8.25m, 1, true);
 carta.Add(entrante2);
 
 // Crear 2 platos principales.
-PlatoPrincipal platoPrincipal1 = new PlatoPrincipal("Hamburguesa", 12m, ["Carne", "Lechuga"]);
+PlatoPrincipal platoPrincipal1 = new PlatoPrincipal("Hamburguesa Completa", 16m, ["Carne", "Lechuga"]);
 carta.Add(platoPrincipal1);
 Producto platoPrincipal2 = new PlatoPrincipal("Pizza", 12, ["Tomate", "Queso"]);
 carta.Add(platoPrincipal2);
@@ -136,7 +136,7 @@ foreach (Producto producto in carta)
     cont++;
 }
 
-Console.WriteLine("Producto a buscar: ");
+/*Console.WriteLine("Producto a buscar: ");
 string productoIntroducido = Console.ReadLine();
 bool encontrado = false;
 
@@ -152,4 +152,30 @@ foreach (Producto prodBuscar in carta)
 if (!encontrado)
 {
     Console.WriteLine("No se ha encontrado el producto.");
+}*/
+
+Console.WriteLine("Precio máximo: ");
+decimal precioIntroducido;
+bool encontrado = false;
+
+if (!decimal.TryParse(Console.ReadLine(), out precioIntroducido))
+{
+    Console.WriteLine("Error; debe introducir un valor númerico.");
+}
+else
+{
+    foreach (Producto prodBuscar in carta)
+    {
+        if (prodBuscar.Precio <= precioIntroducido)
+        {
+            Console.WriteLine(prodBuscar.GetDescription());
+            encontrado = true;
+        }
+    }
+}
+
+
+if (!encontrado)
+{
+    Console.WriteLine("No se ha encontrado ningún producto que cumpla la condición de precio.");
 }
