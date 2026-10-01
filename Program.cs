@@ -154,7 +154,7 @@ if (!encontrado)
     Console.WriteLine("No se ha encontrado el producto.");
 }*/
 
-Console.WriteLine("Precio máximo: ");
+/*Console.WriteLine("Precio máximo: ");
 decimal precioIntroducido;
 bool encontrado = false;
 
@@ -178,4 +178,21 @@ else
 if (!encontrado)
 {
     Console.WriteLine("No se ha encontrado ningún producto que cumpla la condición de precio.");
+}*/
+
+decimal precioMaximo = carta[0].Precio;
+foreach (Producto producto in carta)
+{
+    if (producto.Precio > precioMaximo)
+    {
+        precioMaximo = producto.Precio;
+    }
+}
+
+foreach (Producto producto in carta)
+{
+    if (producto.Precio == precioMaximo)
+    {
+        Console.WriteLine($"\nEl producto más caro es: {producto.GetDescription()}");
+    }
 }
