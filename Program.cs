@@ -82,9 +82,9 @@ do
         opcion = -1; // Asignar un valor inválido para que el bucle continúe.
         continue;
     }
-    else if (opcion < opcionSalir || opcion > 6)
+    else if (opcion < opcionSalir || opcion > 8)
     {
-        Console.WriteLine("Opción no válida, selecciona una opción válida (0-6).");
+        Console.WriteLine("Opción no válida, selecciona una opción válida (0-8).");
         continue;
     }
 
@@ -100,12 +100,18 @@ do
             MostrarPedido(pedido);
             break;
         case 4:
-            BuscarProducto(carta);
+            EliminarProductoPedido(pedido);
             break;
         case 5:
-            MostrarProductosPorPrecio(carta);
+            // FinalizarPedido(pedido);
             break;
         case 6:
+            BuscarProducto(carta);
+            break;
+        case 7:
+            MostrarProductosPorPrecio(carta);
+            break;
+        case 8:
             MostrarProductoMasCaro(carta);
             break;
         case opcionSalir:
@@ -122,9 +128,11 @@ void MostrarMenu()
     Console.WriteLine("1. Ver carta.");
     Console.WriteLine("2. Añadir producto al pedido.");
     Console.WriteLine("3. Ver pedido.");
-    Console.WriteLine("4. Buscar producto.");
-    Console.WriteLine("5. Productos por precio.");
-    Console.WriteLine("6. Producto más caro.");
+    Console.WriteLine("4. Eliminar producto del pedido.");
+    Console.WriteLine("5. Finalizar pedido..");
+    Console.WriteLine("6. Buscar producto.");
+    Console.WriteLine("7. Productos por precio.");
+    Console.WriteLine("8. Producto más caro.");
     Console.WriteLine("0. Salir.");
     Console.WriteLine("\n Elija una opción: ");
 }
@@ -312,13 +320,48 @@ void MostrarPedido(List<Producto> pedido)
         Console.WriteLine("PRODUCTO\t\tPRECIO");
         Console.WriteLine("-----------------------------------");
         decimal precioTotal = 0;
-        foreach (Producto producto in pedido)
+        for (int i = 0; i < pedido.Count; i++)
         {
-            Console.WriteLine($"{producto.Nombre}\t\t{producto.Precio:F2}€");
-            precioTotal += producto.Precio;
+            Console.WriteLine($"{i + 1}. {pedido[i].Nombre}\t\t{pedido[i].Precio:F2}€");
+            precioTotal += pedido[i].Precio;
         }
         Console.WriteLine("-----------------------------------");
         Console.WriteLine($"TOTAL:\t\t\t{precioTotal:F2}€");
     }
 
+}
+
+void EliminarProductoPedido(List<Producto> pedido)
+{
+    if (pedido.Count == 0)
+    {
+        Console.WriteLine("El pedido está vacío.");
+    }
+    else
+    {
+        MostrarPedido(pedido);
+
+        int prodEliminar;
+
+        do
+        {
+            Console.WriteLine("¿Qué producto quieres eliminar?");
+
+            if (!int.TryParse(Console.ReadLine(), out prodEliminar))
+            {
+                Console.WriteLine("Error; debe introducir un valor númerico.");
+                prodEliminar = -1;
+            }
+            else if (prodEliminar < 1 || prodEliminar > pedido.Count)
+            {
+                Console.WriteLine($"Ese producto no existe, selecciona una opción válida (1-{pedido.Count}).");
+                prodEliminar = -1;
+            }
+
+        } while (prodEliminar == -1);
+
+        string nombreProducto = pedido[prodEliminar - 1].Nombre;
+        pedido.RemoveAt(prodEliminar - 1);
+        Console.WriteLine(nombreProducto + " eliminado/a del pedido correctamente.");
+    }
 }
