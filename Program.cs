@@ -103,7 +103,7 @@ do
             EliminarProductoPedido(pedido);
             break;
         case 5:
-            // FinalizarPedido(pedido);
+            FinalizarPedido(pedido);
             break;
         case 6:
             BuscarProducto(carta);
@@ -129,7 +129,7 @@ void MostrarMenu()
     Console.WriteLine("2. Añadir producto al pedido.");
     Console.WriteLine("3. Ver pedido.");
     Console.WriteLine("4. Eliminar producto del pedido.");
-    Console.WriteLine("5. Finalizar pedido..");
+    Console.WriteLine("5. Finalizar pedido.");
     Console.WriteLine("6. Buscar producto.");
     Console.WriteLine("7. Productos por precio.");
     Console.WriteLine("8. Producto más caro.");
@@ -363,5 +363,34 @@ void EliminarProductoPedido(List<Producto> pedido)
         string nombreProducto = pedido[prodEliminar - 1].Nombre;
         pedido.RemoveAt(prodEliminar - 1);
         Console.WriteLine(nombreProducto + " eliminado/a del pedido correctamente.");
+    }
+}
+
+void FinalizarPedido(List<Producto> pedido)
+{
+    if (pedido.Count == 0)
+    {
+        Console.WriteLine("El pedido está vacío. No se puede generar el ticket.");
+    }
+    else
+    {
+        Console.WriteLine("\n======= TICKET =======\n");
+
+        decimal precioTotal = 0;
+
+        foreach (Producto producto in pedido)
+        {
+            Console.WriteLine(producto.Nombre + "\t\t" + producto.Precio + " €");
+            precioTotal += producto.Precio;
+        }
+
+        Console.WriteLine("\n----------------------");
+        Console.WriteLine("Productos:\t\t" + pedido.Count);
+        Console.WriteLine("TOTAL:\t\t\t" + precioTotal + " €");
+
+        Console.WriteLine("\nGracias por tu visita.");
+
+        // Vaciar el pedido.
+        pedido.Clear();
     }
 }
